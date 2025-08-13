@@ -87,3 +87,14 @@ site/
 *.pid
 *.seed
 *.pid.lock
+
+# Context7 version check reports (временные отчеты проверки версий)
+version-check-*.json
+version-check-*.txt
+version_check_*.json
+*version-report*.json
+
+# Context7 version check reports (если случайно создались в корне)
+version-check-*.json
+version-report-*.json
+*-version-check.json
