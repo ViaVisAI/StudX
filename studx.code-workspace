@@ -1,0 +1,180 @@
+{
+  "folders": [
+    {
+      "name": "📦 StudX - Root",
+      "path": "."
+    },
+    {
+      "name": "⚙️ Backend",
+      "path": "./backend"
+    },
+    {
+      "name": "🎨 Frontend", 
+      "path": "./frontend"
+    },
+    {
+      "name": "📚 Docs",
+      "path": "./docs"
+    }
+  ],
+  "settings": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 1000,
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.exclude": {
+      "**/.git": true,
+      "**/.DS_Store": true,      "**/*.log": true,
+      "**/node_modules": true,
+      "**/coverage": true,
+      "**/.nyc_output": true
+    },
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/bower_components": true,
+      "**/dist": true,
+      "**/build": true,
+      "**/coverage": true,
+      "**/.git": true,
+      "**/.next": true
+    },
+    "terminal.integrated.defaultProfile.osx": "zsh",
+    "terminal.integrated.defaultProfile.windows": "powershell",
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "emmet.includeLanguages": {
+      "javascript": "javascriptreact"
+    },
+    "npm.enableScriptExplorer": true,
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "git.enableSmartCommit": true,
+    "workbench.iconTheme": "vscode-icons",
+    "javascript.suggest.autoImports": true,
+    "typescript.suggest.autoImports": true,
+    "eslint.validate": [
+      "javascript",
+      "javascriptreact",      "typescript",
+      "typescriptreact"
+    ],
+    "prettier.singleQuote": true,
+    "prettier.trailingComma": "es5",
+    "prettier.printWidth": 100,
+    "prettier.bracketSpacing": true,
+    "prettier.semi": true,
+    "debug.console.fontSize": 14,
+    "debug.console.fontFamily": "Menlo, Monaco, 'Courier New', monospace"
+  },
+  "extensions": {
+    "recommendations": [
+      "dbaeumer.vscode-eslint",
+      "esbenp.prettier-vscode",
+      "vscode-icons-team.vscode-icons",
+      "christian-kohler.npm-intellisense",
+      "xabikos.javascriptsnippets",
+      "formulahendry.auto-rename-tag",
+      "formulahendry.auto-close-tag",
+      "naumovs.color-highlight",
+      "christian-kohler.path-intellisense",
+      "mikestead.dotenv",
+      "ms-vscode.vscode-typescript-next",
+      "streetsidesoftware.code-spell-checker",
+      "yzhang.markdown-all-in-one",
+      "eamodio.gitlens",
+      "mhutchie.git-graph",
+      "rangav.vscode-thunder-client",
+      "quicktype.quicktype",
+      "orta.vscode-jest",
+      "ritwickdey.liveserver"
+    ]
+  },  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "🚀 Backend Dev",
+        "skipFiles": ["<node_internals>/**"],
+        "program": "${workspaceFolder:⚙️ Backend}/src/index.js",
+        "cwd": "${workspaceFolder:⚙️ Backend}",
+        "envFile": "${workspaceFolder:⚙️ Backend}/.env",
+        "console": "integratedTerminal",
+        "restart": true,
+        "protocol": "inspector"
+      },
+      {
+        "type": "chrome",
+        "request": "launch",
+        "name": "🎨 Frontend Dev",
+        "url": "http://localhost:3000",
+        "webRoot": "${workspaceFolder:🎨 Frontend}/src",
+        "sourceMapPathOverrides": {
+          "webpack:///src/*": "${webRoot}/*"
+        }
+      },
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "🧪 Backend Tests",
+        "skipFiles": ["<node_internals>/**"],
+        "program": "${workspaceFolder:⚙️ Backend}/node_modules/.bin/jest",
+        "args": ["--runInBand", "--coverage"],
+        "cwd": "${workspaceFolder:⚙️ Backend}",
+        "console": "integratedTerminal",
+        "internalConsoleOptions": "neverOpen"
+      }
+    ],
+    "compounds": [
+      {
+        "name": "🔥 Full Stack",
+        "configurations": ["🚀 Backend Dev", "🎨 Frontend Dev"],
+        "stopAll": true
+      }
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "📦 Install All Dependencies",
+        "type": "shell",
+        "command": "cd backend && npm install && cd ../frontend && npm install",
+        "group": "build",
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        }
+      },
+      {
+        "label": "🚀 Start Backend",
+        "type": "npm",
+        "script": "dev",
+        "path": "backend/",
+        "group": "test",
+        "isBackground": true
+      },
+      {
+        "label": "🎨 Start Frontend",
+        "type": "npm",
+        "script": "start",
+        "path": "frontend/",
+        "group": "test",
+        "isBackground": true
+      },
+      {
+        "label": "🏗️ Build Production",
+        "type": "shell",
+        "command": "cd backend && npm run build && cd ../frontend && npm run build",
+        "group": "build"
+      }
+    ]
+  }
+}
