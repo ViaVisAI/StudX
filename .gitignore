@@ -97,4 +97,4 @@ version_check_*.json
 # Context7 version check reports (если случайно создались в корне)
 version-check-*.json
 version-report-*.json
-*-version-check.json
+*-version-check.jsondependency-check-results.md
