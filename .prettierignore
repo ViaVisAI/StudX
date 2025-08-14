@@ -1,0 +1,11 @@
+# Ignore файлы для Prettier
+node_modules
+dist
+build
+.nuxt
+.output
+*.min.js
+*.min.css
+package-lock.json
+yarn.lock
+pnpm-lock.yaml

@@ -1,0 +1,52 @@
+{
+  "version": "0.2",
+  "ignorePaths": [
+    "node_modules/**",
+    "dist/**",
+    "build/**",
+    ".git/**",
+    "*.min.*",
+    "*.lock",
+    "package-lock.json",
+    "yarn.lock",
+    ".nuxt/**",
+    ".output/**",
+    "frontend/node_modules/**",
+    "backend/node_modules/**",
+    "frontend/dist/**",
+    "backend/dist/**"
+  ],
+  "words": [
+    "studx",
+    "nuxt",
+    "vite",
+    "pinia",
+    "composables",
+    "nitro",
+    "ofetch",
+    "defu",
+    "destr",
+    "unocss",
+    "iconify",
+    "antfu",
+    "vitest",
+    "unplugin",
+    "autoimport",
+    "axios",
+    "jsonwebtoken",
+    "bcrypt",
+    "dotenv",
+    "sequelize",
+    "nodemailer",
+    "multer",
+    "cors"
+  ],
+  "flagWords": [],
+  "ignoreRegExpList": [
+    "\\[.+?\\]\\(.+?\\)",
+    "https?://[^\\s]+",
+    "[а-яА-ЯёЁ]+",
+    "\\b[А-Я]{2,}\\b"
+  ],
+  "allowCompoundWords": true
+}
