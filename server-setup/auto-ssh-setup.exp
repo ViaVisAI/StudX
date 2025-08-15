@@ -1,0 +1,64 @@
+#!/usr/bin/expect -f
+
+# Автоматическая настройка SSH с обработкой смены пароля
+set timeout 30
+set host "157.230.21.54"
+set old_password "333d9890935263bbbb4a6852d2"
+set new_password "StudX2024Secure!"
+
+# Подключаемся к серверу
+spawn ssh root@$host
+
+# Обрабатываем разные сценарии
+expect {
+    # Первое подключение - fingerprint
+    "Are you sure you want to continue connecting" {
+        send "yes\r"
+        exp_continue
+    }
+    # Запрос пароля
+    "password:" {
+        send "$old_password\r"
+        exp_continue
+    }
+    # Требование смены пароля
+    "Current password:" {
+        send "$old_password\r"
+        exp_continue
+    }
+    # Новый пароль
+    "New password:" {
+        send "$new_password\r"
+        exp_continue
+    }
+    # Подтверждение нового пароля
+    "Retype new password:" {
+        send "$new_password\r"
+        exp_continue
+    }
+    # Успешное подключение
+    "root@*" {
+        send "echo 'SSH connected successfully!'\r"
+    }
+}
+
+# Добавляем наш SSH ключ
+send "mkdir -p /root/.ssh\r"
+expect "root@*"
+
+send "echo 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEb9VQvK6uGxWJrxz0vDmH5vyZGhZEL4rJPBGJ2yIqfK studx-deploy' >> /root/.ssh/authorized_keys\r"
+expect "root@*"
+
+send "chmod 700 /root/.ssh\r"
+expect "root@*"
+
+send "chmod 600 /root/.ssh/authorized_keys\r"
+expect "root@*"
+
+send "echo 'SSH key added successfully!'\r"
+expect "root@*"
+
+send "exit\r"
+expect eof
+
+puts "\n✅ SSH настроен! Новый пароль: $new_password"

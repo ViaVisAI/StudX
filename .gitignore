@@ -24,6 +24,9 @@ logs/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Temporary deployment scripts (local only)
+deploy-scripts/
 lerna-debug.log*
 .pnpm-debug.log*
 

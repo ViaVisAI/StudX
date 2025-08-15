@@ -1,0 +1,19 @@
+### СКОПИРУЙ ЭТИ КОМАНДЫ В ВЕБ-КОНСОЛЬ:
+### https://cloud.digitalocean.com/droplets/513406106/terminal
+
+# 1. НАЙТИ ГЛАВНЫЙ ФАЙЛ
+cd /var/www/studx/current/backend
+ls *.js | grep -E "^(server|app|index)\.js$"
+
+# 2. ЗАПУСТИТЬ (замени ФАЙЛ.js на реальное имя)
+pm2 start ФАЙЛ.js --name studx-backend
+
+# 3. СОХРАНИТЬ КОНФИГУРАЦИЮ
+pm2 save
+pm2 startup systemd -u root --hp /root
+
+# 4. ПРОВЕРИТЬ
+pm2 status
+curl localhost:3000/api/health
+
+### ПОСЛЕ ЭТОГО САЙТ ЗАРАБОТАЕТ!
