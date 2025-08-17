@@ -20,7 +20,52 @@
     "indent": ["error", 2],
     "comma-dangle": ["error", "always-multiline"],
     "no-trailing-spaces": "error",
-    "eol-last": "error"
+    "eol-last": "error",
+    
+    // НОВЫЕ ПРАВИЛА ДЛЯ КАЧЕСТВА:
+    
+    // Async/await и промисы
+    "no-async-promise-executor": "error",
+    "no-await-in-loop": "warn",
+    "require-await": "warn",
+    "prefer-promise-reject-errors": "error",
+    
+    // Безопасность
+    "no-eval": "error",
+    "no-implied-eval": "error",
+    "no-new-func": "error",
+    "no-script-url": "error",
+    "no-throw-literal": "error",
+    
+    // Импорты и модули
+    "no-duplicate-imports": "error",
+    "no-useless-rename": "error",
+    "sort-imports": ["warn", {
+      "ignoreCase": true,
+      "ignoreDeclarationSort": true
+    }],
+    
+    // Переменные и область видимости
+    "no-shadow": "warn",
+    "no-use-before-define": ["error", { "functions": false }],
+    "prefer-const": "warn",
+    
+    // Лучшие практики
+    "no-return-await": "error",
+    "no-unused-expressions": "warn",
+    "no-useless-catch": "error",
+    "no-useless-return": "warn",
+    "require-atomic-updates": "error",
+    
+    // Стиль кода
+    "arrow-body-style": ["warn", "as-needed"],
+    "prefer-arrow-callback": "warn",
+    "prefer-template": "warn",
+    "object-shorthand": ["warn", "always"],
+    
+    // Производительность
+    "no-constant-condition": "warn",
+    "no-unreachable": "error"
   },
   "ignorePatterns": [
     "node_modules/",
