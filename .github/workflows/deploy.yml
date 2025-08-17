@@ -1,0 +1,129 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: |
+            backend/package-lock.json
+            frontend/package-lock.json
+      
+      - name: Install dependencies
+        run: |
+          npm ci --prefix backend
+          npm ci --prefix frontend
+      
+      - name: Run backend tests
+        run: npm test --prefix backend
+        continue-on-error: true  # Пока тесты не написаны
+      
+      - name: Build frontend
+        run: npm run build --prefix frontend
+      
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: frontend-build
+          path: frontend/build/
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Deploy to server
+        env:
+          DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+          SERVER_IP: 157.230.21.54
+          SERVER_USER: studx
+        run: |
+          # Настройка SSH
+          mkdir -p ~/.ssh
+          echo "$DEPLOY_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
+          
+          # Деплой через SSH
+          ssh -i ~/.ssh/deploy_key $SERVER_USER@$SERVER_IP << 'ENDSSH'
+            cd /var/www/studx
+            
+            # Создаем новый релиз
+            RELEASE_DIR="releases/$(date +%Y%m%d%H%M%S)"
+            git clone https://github.com/${{ github.repository }}.git $RELEASE_DIR
+            
+            cd $RELEASE_DIR
+            git checkout ${{ github.sha }}
+            
+            # Копируем shared файлы
+            ln -nfs /var/www/studx/shared/.env backend/.env
+            ln -nfs /var/www/studx/shared/uploads backend/uploads
+            ln -nfs /var/www/studx/shared/logs backend/logs
+            
+            # Устанавливаем зависимости
+            npm ci --prefix backend --production
+            npm ci --prefix frontend
+            npm run build --prefix frontend
+            
+            # Миграции БД
+            cd backend
+            npx sequelize db:migrate
+            
+            # Обновляем симлинк
+            ln -sfn /var/www/studx/$RELEASE_DIR /var/www/studx/current
+            
+            # Перезапускаем приложение
+            pm2 reload ecosystem
+            
+            # Проверяем health
+            sleep 5
+            curl -f http://localhost:3000/api/health || exit 1
+            
+            # Очищаем старые релизы (оставляем последние 5)
+            cd /var/www/studx/releases
+            ls -t | tail -n +6 | xargs rm -rf
+            
+            echo "Deploy successful!"
+          ENDSSH
+      
+      - name: Check deployment
+        run: |
+          sleep 10
+          curl -f https://studx.ru/api/health || exit 1
+      
+      - name: Notify success
+        if: success()
+        run: echo "✅ Deployment successful!"
+      
+      - name: Rollback on failure
+        if: failure()
+        env:
+          DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+          SERVER_IP: 157.230.21.54
+          SERVER_USER: studx
+        run: |
+          ssh -i ~/.ssh/deploy_key $SERVER_USER@$SERVER_IP << 'ENDSSH'
+            cd /var/www/studx
+            
+            # Откат на предыдущую версию
+            PREVIOUS=$(ls -t releases | head -2 | tail -1)
+            if [ ! -z "$PREVIOUS" ]; then
+              ln -sfn /var/www/studx/releases/$PREVIOUS /var/www/studx/current
+              pm2 reload ecosystem
+              echo "⚠️ Rolled back to previous version: $PREVIOUS"
+            fi
+          ENDSSH
