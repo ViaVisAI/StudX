@@ -1,95 +1,57 @@
-# Dependencies
-node_modules/
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
+# Node
+node_modules
+npm-debug.log
+yarn-error.log
+.pnpm-debug.log
 
-# Environment variables
+# Environment
 .env
 .env.local
-.env.production
-.env.development
-.env.test
+.env.development.local
+.env.test.local
+.env.production.local
 
-# Production build
-dist/
-build/
-out/
-.next/
-.nuxt/
-
-# Logs
-logs/
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Temporary deployment scripts (local only)
-deploy-scripts/
-lerna-debug.log*
-.pnpm-debug.log*
-
-# OS files
-.DS_Store
-Thumbs.db
-Desktop.ini
-# IDE and editor files
+# IDE
 .vscode/
 .idea/
 *.swp
 *.swo
-*~
-.project
-.classpath
+*.swn
+.DS_Store
 .settings/
 *.sublime-workspace
 *.sublime-project
 
 # Testing
 coverage/
-.nyc_output/
-*.test.js.snap
-__tests__/
-__mocks__/
 
-# Cache and temp
-.cache/
-.temp/
-tmp/
-temp/
-*.tmp
+# Production
+dist/
+build/
 
-# Database
-*.sqlite
-*.sqlite3
-*.db
-
-# SSL certificates
-*.pem
-*.key
-*.crt
-
-# Backup files
+# Backups & Temp
 *.backup
 *.bak
-*.old
+*.tmp
+*.temp
+.temp/
+backup/
 
-# Documentation build
-docs/build/
-site/
+# Logs
+logs/
+*.log
+log/
 
-# Package managers
-.yarn/
-.pnpm-store/
+# OS generated
+Thumbs.db
+.Spotlight-V100
+.Trashes
 
-# Misc
-.serverless/
-.fusebox/
-.dynamodb/
-*.pid
-*.seed
-*.pid.lock
+# Git merge
+*.orig
+
+# Deployment
+deploy/
 
 # Context7 version check reports (временные отчеты проверки версий)
 version-check-*.json
@@ -101,3 +63,33 @@ version_check_*.json
 version-check-*.json
 version-report-*.json
 *-version-check.jsondependency-check-results.md
+
+# API Keys - КРИТИЧНО! НИКОГДА НЕ КОММИТИТЬ!
+API_KEYS.md
+*api-keys*
+*.key
+add-api-keys.sh
+.env.production.local
+.env.keys
+*secrets*
+*credentials*
+
+# Production Info - чувствительная информация о сервере
+PRODUCTION_INFO.md
+*production-info*
+server-info.md
+
+# Деплой скрипты и временные файлы
+server-setup/
+deploy-scripts/
+check-production.sh
+deploy-final.sh
+final-setup.sh
+*-deploy.sh
+*-setup.sh
+
+# .env файлы - двойная защита!
+**/.env
+**/.env.*
+.env.production
+server-setup/.env.production
