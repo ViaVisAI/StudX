@@ -28,11 +28,11 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "pg": "^8.16.3",
-    "helmet": "^8.1.0"
+    "helmet": "^8.1.0",
+    "jest": "^30.0.5"
   },
   "devDependencies": {
     "nodemon": "^3.1.10",
-    "jest": "^30.0.5",
     "eslint": "^9.33.0",
     "prettier": "^3.6.2"
   },
