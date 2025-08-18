@@ -27,7 +27,14 @@
       "**/*.log": true,
       "**/node_modules": true,
       "**/coverage": true,
-      "**/.nyc_output": true
+      "**/.nyc_output": true,
+      ".editorconfig": true,
+      ".eslintrc.json": true,
+      ".prettierrc": true,
+      ".prettierignore": true,
+      "cspell.json": true,
+      "jsconfig.json": true,
+      ".nvmrc": true
     },
     "search.exclude": {
       "**/node_modules": true,
@@ -46,7 +53,6 @@
     "emmet.includeLanguages": {
       "javascript": "javascriptreact"
     },
-    "npm.enableScriptExplorer": true,
     "git.autofetch": true,
     "git.confirmSync": false,
     "git.enableSmartCommit": true,
@@ -97,8 +103,7 @@
         "cwd": "${workspaceFolder:⚙️ Backend}",
         "envFile": "${workspaceFolder:⚙️ Backend}/.env",
         "console": "integratedTerminal",
-        "restart": true,
-        "protocol": "inspector"
+        "restart": true
       },
       {
         "type": "chrome",

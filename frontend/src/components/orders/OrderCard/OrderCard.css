@@ -1,0 +1,71 @@
+/* OrderCard.css */
+
+.order-card {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.order-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
+
+.order-card.status-draft { border-left: 4px solid #9e9e9e; }
+.order-card.status-pending { border-left: 4px solid #ff9800; }
+.order-card.status-in_progress { border-left: 4px solid #2196f3; }
+.order-card.status-completed { border-left: 4px solid #4caf50; }
+.order-card.status-cancelled { border-left: 4px solid #f44336; }
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.order-number {
+  font-weight: 600;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.order-body {
+  margin-bottom: 1rem;
+}
+
+.order-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.order-topic {
+  color: #666;
+  font-size: 0.95rem;
+  margin: 0.5rem 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.order-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: #999;
+  margin-top: 0.75rem;
+}
+
+.order-actions {
+  display: flex;
+  gap: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #f0f0f0;
+}
