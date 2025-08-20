@@ -42,7 +42,18 @@ function Modal({
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay" onClick={handleOverlayClick}>
+    <div 
+      className="modal-overlay" 
+      onClick={handleOverlayClick}
+      onKeyPress={(e) => {
+        if (e.key === 'Escape') {
+          handleOverlayClick(e);
+        }
+      }}
+      tabIndex={-1}
+      role="presentation"
+      aria-label="Модальное окно"
+    >
       <div className={`modal modal-${size}`}>
         <div className="modal-header">
           <h2 className="modal-title">{title}</h2>

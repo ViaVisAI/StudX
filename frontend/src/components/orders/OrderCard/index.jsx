@@ -34,7 +34,19 @@ function OrderCard({ order, onClick, onStatusChange }) {
   const actions = getAvailableActions(order.status);
 
   return (
-    <div className={`order-card status-${order.status}`} onClick={onClick}>
+    <div 
+      className={`order-card status-${order.status}`} 
+      onClick={onClick}
+      onKeyPress={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClick(e);
+        }
+      }}
+      tabIndex={0}
+      role="button"
+      aria-label={`Карточка заказа ${order.orderNumber || order.id}`}
+    >
       <div className="order-header">
         <span className="order-number">#{order.orderNumber || order.id}</span>
         <StatusBadge status={order.status} />
@@ -57,7 +69,11 @@ function OrderCard({ order, onClick, onStatusChange }) {
       </div>
       
       {actions.length > 0 && (
-        <div className="order-actions" onClick={e => e.stopPropagation()}>
+        <div 
+          className="order-actions" 
+          onClick={e => e.stopPropagation()}
+          onKeyPress={e => e.stopPropagation()}
+        >
           {actions.map(action => (
             <Button
               key={action}
