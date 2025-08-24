@@ -1,6 +1,6 @@
 {
   "name": "studx-frontend",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Frontend для StudX - интерфейс генерации академических работ",
   "private": true,
   "scripts": {
